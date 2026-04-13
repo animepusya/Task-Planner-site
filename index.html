@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Task Planner</title>
+
+<style>
+:root {
+  --bg: #fafaff;
+  --card: rgba(255, 255, 255, 0.94);
+  --text-primary: #1f1f28;
+  --text-secondary: #737380;
+  --border: rgba(0,0,0,0.05);
+
+  --accent: #8c63ff;
+  --accent-pink: #ff6ac1;
+}
+
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+  background: linear-gradient(135deg, #fde1ef, #e0d9ff);
+  color: var(--text-primary);
+}
+
+.container {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 32px 20px 60px;
+}
+
+.hero {
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.hero h1 {
+  font-size: 34px;
+  margin-bottom: 10px;
+}
+
+.hero p {
+  font-size: 16px;
+  color: var(--text-secondary);
+  margin-bottom: 20px;
+}
+
+.button {
+  display: inline-block;
+  padding: 12px 20px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, var(--accent-pink), var(--accent));
+  color: white;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.card {
+  background: var(--card);
+  border-radius: 24px;
+  padding: 24px;
+  border: 1px solid var(--border);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+  margin-bottom: 30px;
+}
+
+.section-title {
+  font-size: 18px;
+  margin-bottom: 16px;
+}
+
+.screenshots {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 20px;
+}
+
+.screenshots img {
+  width: 100%;
+  border-radius: 18px;
+}
+
+.footer {
+  text-align: center;
+  margin-top: 40px;
+  font-size: 14px;
+  color: var(--text-secondary);
+}
+
+.footer a {
+  color: var(--accent);
+  text-decoration: none;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+  <!-- HERO -->
+  <div class="hero">
+    <h1>Task Planner</h1>
+    <p>Simple and powerful task management with clean design and smart features</p>
+
+    <!-- вставишь потом ссылку на App Store -->
+    <a class="button" href="#">Download on App Store</a>
+  </div>
+
+  <!-- SCREENSHOTS -->
+  <div class="card">
+    <div class="section-title">Screenshots</div>
+
+    <div class="screenshots">
+      <img src="assets/screenshots/task-planner-01-hero.png" />
+      <img src="assets/screenshots/task-planner-02-editor.png" />
+      <img src="assets/screenshots/task-planner-03-notify.png" />
+      <img src="assets/screenshots/task-planner-04-stats.png" />
+      <img src="assets/screenshots/task-planner-05-comparison.png" />
+    </div>
+  </div>
+
+  <!-- FEATURES -->
+  <div class="card">
+    <div class="section-title">Features</div>
+    <p>
+      • Task management with categories<br/>
+      • Recurring tasks and reminders<br/>
+      • Clean statistics and insights<br/>
+      • Apple Calendar integration<br/>
+      • Simple and fast experience
+    </p>
+  </div>
+
+  <!-- FOOTER -->
+  <div class="footer">
+    <a href="privacy.html">Privacy Policy</a><br/><br/>
+    © 2026 Task Planner
+  </div>
+
+</div>
+
+</body>
+</html>
