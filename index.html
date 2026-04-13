@@ -1,145 +1,1094 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Task Planner</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Task Planner</title>
+  <meta
+    name="description"
+    content="Task Planner is a clean and powerful iOS app for tasks, recurring plans, reminders, and statistics."
+  />
 
-<style>
-:root {
-  --bg: #fafaff;
-  --card: rgba(255, 255, 255, 0.94);
-  --text-primary: #1f1f28;
-  --text-secondary: #737380;
-  --border: rgba(0,0,0,0.05);
+  <style>
+    :root {
+      --bg: #fafaff;
+      --bg-2: #f6f3ff;
+      --card: rgba(255, 255, 255, 0.82);
+      --card-strong: rgba(255, 255, 255, 0.92);
+      --text-primary: #1f1f28;
+      --text-secondary: #737380;
+      --border: rgba(0, 0, 0, 0.06);
+      --border-soft: rgba(0, 0, 0, 0.035);
 
-  --accent: #8c63ff;
-  --accent-pink: #ff6ac1;
-}
+      --purple: #8c63ff;
+      --purple-dark: #6137d7;
+      --pink: #ff6ac1;
+      --lavender: #ddd5ff;
+      --light-pink: #ffe0ef;
 
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, sans-serif;
-  background: linear-gradient(135deg, #fde1ef, #e0d9ff);
-  color: var(--text-primary);
-}
+      --shadow-lg: 0 30px 80px rgba(93, 57, 201, 0.14);
+      --shadow-md: 0 16px 40px rgba(31, 31, 40, 0.08);
+      --shadow-sm: 0 8px 24px rgba(31, 31, 40, 0.05);
 
-.container {
-  max-width: 900px;
-  margin: 0 auto;
-  padding: 32px 20px 60px;
-}
+      --radius-xl: 32px;
+      --radius-lg: 26px;
+      --radius-md: 20px;
+      --radius-sm: 16px;
 
-.hero {
-  text-align: center;
-  margin-bottom: 40px;
-}
+      --container: 1180px;
+    }
 
-.hero h1 {
-  font-size: 34px;
-  margin-bottom: 10px;
-}
+    * {
+      box-sizing: border-box;
+    }
 
-.hero p {
-  font-size: 16px;
-  color: var(--text-secondary);
-  margin-bottom: 20px;
-}
+    html {
+      scroll-behavior: smooth;
+    }
 
-.button {
-  display: inline-block;
-  padding: 12px 20px;
-  border-radius: 999px;
-  background: linear-gradient(90deg, var(--accent-pink), var(--accent));
-  color: white;
-  font-weight: 600;
-  text-decoration: none;
-}
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", sans-serif;
+      color: var(--text-primary);
+      background:
+        radial-gradient(circle at top left, rgba(255, 106, 193, 0.20), transparent 34%),
+        radial-gradient(circle at top right, rgba(140, 99, 255, 0.16), transparent 28%),
+        linear-gradient(180deg, #fff9fc 0%, #fafaff 28%, #f8f7ff 100%);
+      overflow-x: hidden;
+    }
 
-.card {
-  background: var(--card);
-  border-radius: 24px;
-  padding: 24px;
-  border: 1px solid var(--border);
-  box-shadow: 0 10px 30px rgba(0,0,0,0.05);
-  margin-bottom: 30px;
-}
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
 
-.section-title {
-  font-size: 18px;
-  margin-bottom: 16px;
-}
+    img {
+      display: block;
+      max-width: 100%;
+    }
 
-.screenshots {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 20px;
-}
+    .page-shell {
+      position: relative;
+      isolation: isolate;
+    }
 
-.screenshots img {
-  width: 100%;
-  border-radius: 18px;
-}
+    .page-shell::before,
+    .page-shell::after {
+      content: "";
+      position: fixed;
+      inset: auto;
+      pointer-events: none;
+      z-index: -1;
+      filter: blur(90px);
+      opacity: 0.7;
+    }
 
-.footer {
-  text-align: center;
-  margin-top: 40px;
-  font-size: 14px;
-  color: var(--text-secondary);
-}
+    .page-shell::before {
+      width: 340px;
+      height: 340px;
+      top: 90px;
+      left: -70px;
+      background: rgba(255, 106, 193, 0.24);
+      border-radius: 50%;
+    }
 
-.footer a {
-  color: var(--accent);
-  text-decoration: none;
-}
-</style>
+    .page-shell::after {
+      width: 380px;
+      height: 380px;
+      top: 40px;
+      right: -90px;
+      background: rgba(140, 99, 255, 0.20);
+      border-radius: 50%;
+    }
+
+    .container {
+      width: min(var(--container), calc(100% - 32px));
+      margin: 0 auto;
+    }
+
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 30;
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      background: linear-gradient(
+        to bottom,
+        rgba(255, 255, 255, 0.92),
+        rgba(255, 255, 255, 0.74)
+      );
+      border-bottom: 1px solid rgba(0, 0, 0, 0.03);
+    }
+
+    .topbar-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      min-height: 72px;
+    }
+
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+    }
+
+    .brand-mark {
+      width: 38px;
+      height: 38px;
+      border-radius: 14px;
+      background:
+        linear-gradient(135deg, rgba(255,255,255,0.72), rgba(255,255,255,0.22)),
+        linear-gradient(135deg, var(--pink), var(--purple));
+      box-shadow:
+        inset 0 1px 0 rgba(255,255,255,0.6),
+        0 10px 22px rgba(118, 82, 241, 0.22);
+      position: relative;
+    }
+
+    .brand-mark::before,
+    .brand-mark::after {
+      content: "";
+      position: absolute;
+      background: rgba(255,255,255,0.95);
+      border-radius: 999px;
+    }
+
+    .brand-mark::before {
+      width: 16px;
+      height: 3px;
+      left: 11px;
+      top: 12px;
+    }
+
+    .brand-mark::after {
+      width: 10px;
+      height: 3px;
+      left: 11px;
+      top: 19px;
+      box-shadow: 0 7px 0 rgba(255,255,255,0.95);
+    }
+
+    .topbar-links {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .nav-link {
+      padding: 10px 14px;
+      border-radius: 999px;
+      color: var(--text-secondary);
+      font-size: 14px;
+      transition: background 0.2s ease, color 0.2s ease;
+    }
+
+    .nav-link:hover {
+      background: rgba(0, 0, 0, 0.04);
+      color: var(--text-primary);
+    }
+
+    .nav-cta {
+      padding: 12px 18px;
+      border-radius: 999px;
+      font-weight: 600;
+      color: white;
+      background: linear-gradient(90deg, var(--pink), var(--purple));
+      box-shadow: 0 10px 24px rgba(140, 99, 255, 0.22);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .nav-cta:hover,
+    .hero-cta-primary:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 14px 30px rgba(140, 99, 255, 0.26);
+    }
+
+    .hero {
+      padding: 52px 0 32px;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 28px;
+      align-items: center;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 16px;
+      padding: 10px 14px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.72);
+      border: 1px solid rgba(255, 255, 255, 0.8);
+      box-shadow: var(--shadow-sm);
+      color: var(--text-secondary);
+      font-size: 13px;
+      font-weight: 600;
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+    }
+
+    .eyebrow-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: linear-gradient(90deg, var(--pink), var(--purple));
+      box-shadow: 0 0 0 6px rgba(140, 99, 255, 0.08);
+    }
+
+    .hero-title {
+      margin: 0;
+      font-size: clamp(42px, 6vw, 76px);
+      line-height: 0.94;
+      letter-spacing: -0.05em;
+    }
+
+    .hero-gradient {
+      display: block;
+      background: linear-gradient(90deg, var(--pink), var(--purple-dark));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .hero-text {
+      margin: 22px 0 0;
+      max-width: 620px;
+      font-size: 18px;
+      line-height: 1.65;
+      color: var(--text-secondary);
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 14px;
+      flex-wrap: wrap;
+      margin-top: 28px;
+    }
+
+    .hero-cta-primary,
+    .hero-cta-secondary {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 52px;
+      padding: 0 22px;
+      border-radius: 999px;
+      font-weight: 600;
+      transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+    }
+
+    .hero-cta-primary {
+      color: white;
+      background: linear-gradient(90deg, var(--pink), var(--purple));
+      box-shadow: 0 12px 26px rgba(140, 99, 255, 0.22);
+    }
+
+    .hero-cta-secondary {
+      background: rgba(255, 255, 255, 0.72);
+      border: 1px solid rgba(255, 255, 255, 0.82);
+      box-shadow: var(--shadow-sm);
+      color: var(--text-primary);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+    }
+
+    .hero-cta-secondary:hover {
+      background: rgba(255, 255, 255, 0.9);
+      transform: translateY(-1px);
+    }
+
+    .hero-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 22px;
+    }
+
+    .meta-pill {
+      padding: 10px 14px;
+      border-radius: 999px;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text-secondary);
+      background: rgba(255, 255, 255, 0.62);
+      border: 1px solid rgba(255, 255, 255, 0.78);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+    }
+
+    .hero-visual {
+      position: relative;
+      min-height: 640px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .hero-glow {
+      position: absolute;
+      inset: auto;
+      width: 72%;
+      height: 72%;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(140, 99, 255, 0.26), transparent 68%);
+      filter: blur(34px);
+      z-index: 0;
+    }
+
+    .phone-stack {
+      position: relative;
+      width: min(100%, 520px);
+      height: 100%;
+      min-height: 620px;
+      z-index: 1;
+    }
+
+    .phone-card {
+      position: absolute;
+      border-radius: 34px;
+      overflow: hidden;
+      background: rgba(255,255,255,0.82);
+      border: 1px solid rgba(255,255,255,0.74);
+      box-shadow: var(--shadow-lg);
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      transform-style: preserve-3d;
+    }
+
+    .phone-card img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .phone-main {
+      width: 300px;
+      height: 610px;
+      right: 58px;
+      top: 10px;
+      z-index: 3;
+      transform: rotate(-5deg);
+    }
+
+    .phone-back-left {
+      width: 220px;
+      height: 452px;
+      left: 18px;
+      top: 96px;
+      z-index: 1;
+      transform: rotate(-11deg);
+      opacity: 0.95;
+    }
+
+    .phone-back-right {
+      width: 220px;
+      height: 452px;
+      right: 0;
+      top: 132px;
+      z-index: 2;
+      transform: rotate(9deg);
+      opacity: 0.97;
+    }
+
+    .section {
+      padding: 56px 0;
+    }
+
+    .section-header {
+      max-width: 760px;
+      margin: 0 auto 28px;
+      text-align: center;
+    }
+
+    .section-header h2 {
+      margin: 0;
+      font-size: clamp(28px, 4vw, 44px);
+      letter-spacing: -0.04em;
+    }
+
+    .section-header p {
+      margin: 14px auto 0;
+      max-width: 640px;
+      font-size: 17px;
+      line-height: 1.65;
+      color: var(--text-secondary);
+    }
+
+    .feature-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 18px;
+    }
+
+    .feature-card {
+      position: relative;
+      padding: 24px;
+      border-radius: var(--radius-lg);
+      background: linear-gradient(
+        180deg,
+        rgba(255,255,255,0.88),
+        rgba(255,255,255,0.76)
+      );
+      border: 1px solid rgba(255,255,255,0.82);
+      box-shadow: var(--shadow-md);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      overflow: hidden;
+    }
+
+    .feature-card::before {
+      content: "";
+      position: absolute;
+      inset: 0 0 auto 0;
+      height: 90px;
+      background: linear-gradient(
+        180deg,
+        rgba(255,255,255,0.36),
+        rgba(255,255,255,0)
+      );
+      pointer-events: none;
+    }
+
+    .feature-icon {
+      width: 46px;
+      height: 46px;
+      border-radius: 16px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 16px;
+      color: white;
+      font-size: 20px;
+      font-weight: 700;
+      background: linear-gradient(135deg, var(--pink), var(--purple));
+      box-shadow: 0 12px 26px rgba(140, 99, 255, 0.18);
+    }
+
+    .feature-card h3 {
+      margin: 0 0 10px;
+      font-size: 19px;
+      letter-spacing: -0.02em;
+    }
+
+    .feature-card p {
+      margin: 0;
+      color: var(--text-secondary);
+      line-height: 1.65;
+      font-size: 15px;
+    }
+
+    .showcase-grid {
+      display: grid;
+      grid-template-columns: 1.05fr 0.95fr;
+      gap: 18px;
+      align-items: stretch;
+    }
+
+    .showcase-card {
+      background: linear-gradient(
+        180deg,
+        rgba(255,255,255,0.88),
+        rgba(255,255,255,0.76)
+      );
+      border: 1px solid rgba(255,255,255,0.84);
+      border-radius: var(--radius-xl);
+      box-shadow: var(--shadow-md);
+      overflow: hidden;
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+    }
+
+    .showcase-card.copy {
+      padding: 34px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .showcase-card.copy h3 {
+      margin: 0;
+      font-size: 30px;
+      letter-spacing: -0.04em;
+    }
+
+    .showcase-card.copy p {
+      margin: 16px 0 0;
+      font-size: 16px;
+      line-height: 1.7;
+      color: var(--text-secondary);
+      max-width: 540px;
+    }
+
+    .showcase-points {
+      display: grid;
+      gap: 12px;
+      margin-top: 24px;
+    }
+
+    .showcase-point {
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+      padding: 14px 16px;
+      border-radius: 18px;
+      background: rgba(255,255,255,0.58);
+      border: 1px solid rgba(255,255,255,0.74);
+    }
+
+    .showcase-point-badge {
+      width: 26px;
+      height: 26px;
+      border-radius: 999px;
+      flex: 0 0 auto;
+      margin-top: 1px;
+      background: linear-gradient(135deg, var(--pink), var(--purple));
+      color: white;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    .showcase-point div {
+      color: var(--text-secondary);
+      line-height: 1.55;
+      font-size: 14px;
+    }
+
+    .showcase-image {
+      aspect-ratio: 1 / 1.02;
+      overflow: hidden;
+    }
+
+    .showcase-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 18px;
+    }
+
+    .gallery-item {
+      padding: 12px;
+      border-radius: 28px;
+      background: linear-gradient(
+        180deg,
+        rgba(255,255,255,0.9),
+        rgba(255,255,255,0.8)
+      );
+      border: 1px solid rgba(255,255,255,0.84);
+      box-shadow: var(--shadow-md);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+    }
+
+    .gallery-item img {
+      border-radius: 20px;
+      width: 100%;
+      height: auto;
+    }
+
+    .gallery-caption {
+      padding: 14px 8px 6px;
+      font-size: 14px;
+      color: var(--text-secondary);
+    }
+
+    .cta-panel {
+      position: relative;
+      overflow: hidden;
+      padding: 34px;
+      border-radius: 34px;
+      background:
+        linear-gradient(135deg, rgba(255,255,255,0.8), rgba(255,255,255,0.62)),
+        linear-gradient(135deg, rgba(255,106,193,0.16), rgba(140,99,255,0.16));
+      border: 1px solid rgba(255,255,255,0.84);
+      box-shadow: var(--shadow-lg);
+      text-align: center;
+      backdrop-filter: blur(22px);
+      -webkit-backdrop-filter: blur(22px);
+    }
+
+    .cta-panel::before {
+      content: "";
+      position: absolute;
+      inset: -20% auto auto -10%;
+      width: 220px;
+      height: 220px;
+      border-radius: 50%;
+      background: rgba(255, 106, 193, 0.16);
+      filter: blur(40px);
+      pointer-events: none;
+    }
+
+    .cta-panel::after {
+      content: "";
+      position: absolute;
+      inset: auto -8% -18% auto;
+      width: 240px;
+      height: 240px;
+      border-radius: 50%;
+      background: rgba(140, 99, 255, 0.16);
+      filter: blur(46px);
+      pointer-events: none;
+    }
+
+    .cta-panel > * {
+      position: relative;
+      z-index: 1;
+    }
+
+    .cta-panel h2 {
+      margin: 0;
+      font-size: clamp(28px, 4vw, 42px);
+      letter-spacing: -0.04em;
+    }
+
+    .cta-panel p {
+      margin: 16px auto 0;
+      max-width: 640px;
+      color: var(--text-secondary);
+      line-height: 1.7;
+      font-size: 16px;
+    }
+
+    .cta-actions {
+      display: flex;
+      justify-content: center;
+      gap: 14px;
+      flex-wrap: wrap;
+      margin-top: 24px;
+    }
+
+    .footer {
+      padding: 34px 0 54px;
+    }
+
+    .footer-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      padding: 20px 0 0;
+      border-top: 1px solid rgba(0, 0, 0, 0.05);
+      color: var(--text-secondary);
+      font-size: 14px;
+    }
+
+    .footer-links {
+      display: inline-flex;
+      align-items: center;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .footer-links a:hover {
+      color: var(--text-primary);
+    }
+
+    [data-reveal] {
+      opacity: 0;
+      transform: translateY(22px);
+      transition:
+        opacity 0.7s ease,
+        transform 0.7s ease;
+    }
+
+    [data-reveal].is-visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    @media (max-width: 1080px) {
+      .hero-grid,
+      .showcase-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-visual {
+        min-height: 560px;
+      }
+
+      .phone-stack {
+        max-width: 560px;
+        margin: 0 auto;
+      }
+    }
+
+    @media (max-width: 860px) {
+      .feature-grid,
+      .gallery-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .topbar-inner {
+        min-height: 64px;
+      }
+
+      .topbar-links .nav-link {
+        display: none;
+      }
+
+      .hero {
+        padding-top: 32px;
+      }
+
+      .hero-visual {
+        min-height: 500px;
+      }
+
+      .phone-main {
+        width: 250px;
+        height: 510px;
+        right: 50%;
+        margin-right: -95px;
+      }
+
+      .phone-back-left,
+      .phone-back-right {
+        width: 185px;
+        height: 380px;
+      }
+
+      .phone-back-left {
+        left: 28px;
+        top: 104px;
+      }
+
+      .phone-back-right {
+        right: 28px;
+        top: 126px;
+      }
+
+      .cta-panel,
+      .showcase-card.copy,
+      .feature-card {
+        padding: 24px;
+      }
+    }
+
+    @media (max-width: 560px) {
+      .container {
+        width: min(var(--container), calc(100% - 20px));
+      }
+
+      .topbar-links {
+        gap: 8px;
+      }
+
+      .nav-cta {
+        padding: 11px 16px;
+        font-size: 14px;
+      }
+
+      .hero-title {
+        font-size: 44px;
+      }
+
+      .hero-text {
+        font-size: 16px;
+      }
+
+      .hero-visual {
+        min-height: 440px;
+      }
+
+      .phone-stack {
+        min-height: 420px;
+      }
+
+      .phone-main {
+        width: 208px;
+        height: 424px;
+        margin-right: -76px;
+        top: 6px;
+      }
+
+      .phone-back-left,
+      .phone-back-right {
+        width: 152px;
+        height: 312px;
+      }
+
+      .phone-back-left {
+        left: 12px;
+        top: 92px;
+      }
+
+      .phone-back-right {
+        right: 12px;
+        top: 112px;
+      }
+
+      .footer-inner {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html {
+        scroll-behavior: auto;
+      }
+
+      [data-reveal] {
+        opacity: 1;
+        transform: none;
+        transition: none;
+      }
+
+      .nav-cta,
+      .hero-cta-primary,
+      .hero-cta-secondary {
+        transition: none;
+      }
+    }
+  </style>
 </head>
-
 <body>
+  <div class="page-shell">
+    <header class="topbar">
+      <div class="container topbar-inner">
+        <a class="brand" href="#top" aria-label="Task Planner home">
+          <span class="brand-mark" aria-hidden="true"></span>
+          <span>Task Planner</span>
+        </a>
 
-<div class="container">
+        <nav class="topbar-links" aria-label="Primary">
+          <a class="nav-link" href="#features">Features</a>
+          <a class="nav-link" href="#screens">Screens</a>
+          <a class="nav-link" href="privacy.html">Privacy</a>
+          <a class="nav-cta" href="#">Download on App Store</a>
+        </nav>
+      </div>
+    </header>
 
-  <!-- HERO -->
-  <div class="hero">
-    <h1>Task Planner</h1>
-    <p>Simple and powerful task management with clean design and smart features</p>
+    <main id="top">
+      <section class="hero">
+        <div class="container hero-grid">
+          <div data-reveal>
+            <div class="eyebrow">
+              <span class="eyebrow-dot"></span>
+              Built for a calmer way to plan your day
+            </div>
 
-    <!-- вставишь потом ссылку на App Store -->
-    <a class="button" href="#">Download on App Store</a>
+            <h1 class="hero-title">
+              Plan clearly.
+              <span class="hero-gradient">Focus softly.</span>
+            </h1>
+
+            <p class="hero-text">
+              Task Planner is a clean iPhone app for tasks, reminders, recurring plans,
+              categories, and beautifully simple statistics — designed to feel light,
+              calm, and fast every day.
+            </p>
+
+            <div class="hero-actions">
+              <a class="hero-cta-primary" href="#">Download on App Store</a>
+              <a class="hero-cta-secondary" href="#screens">View screenshots</a>
+            </div>
+
+            <div class="hero-meta">
+              <span class="meta-pill">Recurring tasks</span>
+              <span class="meta-pill">Reminders</span>
+              <span class="meta-pill">Statistics</span>
+              <span class="meta-pill">Apple Calendar</span>
+            </div>
+          </div>
+
+          <div class="hero-visual" data-reveal>
+            <div class="hero-glow"></div>
+
+            <div class="phone-stack" aria-hidden="true">
+              <div class="phone-card phone-back-left">
+                <img src="assets/screenshots/task-planner-04-stats.png" alt="" />
+              </div>
+
+              <div class="phone-card phone-back-right">
+                <img src="assets/screenshots/task-planner-05-comparison.png" alt="" />
+              </div>
+
+              <div class="phone-card phone-main">
+                <img src="assets/screenshots/task-planner-01-hero.png" alt="" />
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="features">
+        <div class="container">
+          <div class="section-header" data-reveal>
+            <h2>Everything important, without the noise</h2>
+            <p>
+              A soft, premium interface for planning tasks, staying on top of reminders,
+              and understanding your time with less friction.
+            </p>
+          </div>
+
+          <div class="feature-grid">
+            <article class="feature-card" data-reveal>
+              <div class="feature-icon">✓</div>
+              <h3>Clean daily planning</h3>
+              <p>
+                Organize tasks in a layout that stays readable, calm, and focused even as your day gets fuller.
+              </p>
+            </article>
+
+            <article class="feature-card" data-reveal>
+              <div class="feature-icon">↺</div>
+              <h3>Recurring tasks</h3>
+              <p>
+                Manage repeated routines with flexible repeat rules and editing flows that stay intuitive.
+              </p>
+            </article>
+
+            <article class="feature-card" data-reveal>
+              <div class="feature-icon">◔</div>
+              <h3>Useful statistics</h3>
+              <p>
+                See your time by category or task, compare periods, and understand patterns without clutter.
+              </p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="container">
+          <div class="showcase-grid">
+            <article class="showcase-card copy" data-reveal>
+              <h3>Designed to feel native, soft, and fast</h3>
+              <p>
+                Task Planner follows a light visual language inspired by modern iOS design:
+                gentle surfaces, spacious layouts, rounded typography, and a flow that stays
+                simple from planning to tracking.
+              </p>
+
+              <div class="showcase-points">
+                <div class="showcase-point">
+                  <span class="showcase-point-badge">1</span>
+                  <div>Fast task creation and editing with clear structure and subtle visual hierarchy.</div>
+                </div>
+                <div class="showcase-point">
+                  <span class="showcase-point-badge">2</span>
+                  <div>Smart reminders, categories, and repeat rules without overwhelming controls.</div>
+                </div>
+                <div class="showcase-point">
+                  <span class="showcase-point-badge">3</span>
+                  <div>Statistics that help you reflect on time spent, not just collect numbers.</div>
+                </div>
+              </div>
+            </article>
+
+            <article class="showcase-card showcase-image" data-reveal>
+              <img
+                src="assets/screenshots/task-planner-02-editor.png"
+                alt="Task Planner task editor screen"
+              />
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="screens">
+        <div class="container">
+          <div class="section-header" data-reveal>
+            <h2>Screens that show the product clearly</h2>
+            <p>
+              A quick look at the planner, editor, reminders, statistics, and comparison views.
+            </p>
+          </div>
+
+          <div class="gallery-grid">
+            <figure class="gallery-item" data-reveal>
+              <img src="assets/screenshots/task-planner-01-hero.png" alt="Task Planner main planner screen" />
+              <figcaption class="gallery-caption">Planner overview</figcaption>
+            </figure>
+
+            <figure class="gallery-item" data-reveal>
+              <img src="assets/screenshots/task-planner-02-editor.png" alt="Task Planner task editor screen" />
+              <figcaption class="gallery-caption">Task editor</figcaption>
+            </figure>
+
+            <figure class="gallery-item" data-reveal>
+              <img src="assets/screenshots/task-planner-03-notify.png" alt="Task Planner notifications screen" />
+              <figcaption class="gallery-caption">Reminder settings</figcaption>
+            </figure>
+
+            <figure class="gallery-item" data-reveal>
+              <img src="assets/screenshots/task-planner-04-stats.png" alt="Task Planner statistics screen" />
+              <figcaption class="gallery-caption">Statistics</figcaption>
+            </figure>
+          </div>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="container">
+          <div class="cta-panel" data-reveal>
+            <h2>Simple planning, with just a little more when you need it</h2>
+            <p>
+              Built for people who want a clean task app first — and deeper tools like recurring flows,
+              reminders, calendar support, and insights when they matter.
+            </p>
+
+            <div class="cta-actions">
+              <a class="hero-cta-primary" href="#">Download on App Store</a>
+              <a class="hero-cta-secondary" href="privacy.html">Privacy Policy</a>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <div class="container footer-inner">
+        <div>© 2026 Task Planner</div>
+
+        <div class="footer-links">
+          <a href="#features">Features</a>
+          <a href="#screens">Screens</a>
+          <a href="privacy.html">Privacy Policy</a>
+          <a href="mailto:rus.melanin@outlook.com">Contact</a>
+        </div>
+      </div>
+    </footer>
   </div>
 
-  <!-- SCREENSHOTS -->
-  <div class="card">
-    <div class="section-title">Screenshots</div>
+  <script>
+    const revealItems = document.querySelectorAll("[data-reveal]");
 
-    <div class="screenshots">
-      <img src="assets/screenshots/task-planner-01-hero.png" />
-      <img src="assets/screenshots/task-planner-02-editor.png" />
-      <img src="assets/screenshots/task-planner-03-notify.png" />
-      <img src="assets/screenshots/task-planner-04-stats.png" />
-      <img src="assets/screenshots/task-planner-05-comparison.png" />
-    </div>
-  </div>
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("is-visible");
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+      {
+        threshold: 0.12,
+        rootMargin: "0px 0px -40px 0px"
+      }
+    );
 
-  <!-- FEATURES -->
-  <div class="card">
-    <div class="section-title">Features</div>
-    <p>
-      • Task management with categories<br/>
-      • Recurring tasks and reminders<br/>
-      • Clean statistics and insights<br/>
-      • Apple Calendar integration<br/>
-      • Simple and fast experience
-    </p>
-  </div>
-
-  <!-- FOOTER -->
-  <div class="footer">
-    <a href="privacy.html">Privacy Policy</a><br/><br/>
-    © 2026 Task Planner
-  </div>
-
-</div>
-
+    revealItems.forEach((item) => observer.observe(item));
+  </script>
 </body>
 </html>
