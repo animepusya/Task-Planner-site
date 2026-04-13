@@ -1,162 +1,815 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Task Planner – Privacy Policy</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Task Planner – Privacy Policy</title>
+  <meta
+    name="description"
+    content="Privacy Policy for Task Planner, an iOS app for tasks, reminders, recurring plans, and statistics."
+  />
 
-<style>
-:root {
-  --bg: #fafaff;
-  --card: rgba(255, 255, 255, 0.94);
-  --text-primary: #1f1f28;
-  --text-secondary: #737380;
-  --border: rgba(0,0,0,0.05);
+  <style>
+    :root {
+      --bg: #fafaff;
+      --bg-2: #f6f3ff;
+      --card: rgba(255, 255, 255, 0.82);
+      --card-strong: rgba(255, 255, 255, 0.92);
+      --text-primary: #1f1f28;
+      --text-secondary: #737380;
+      --border: rgba(0, 0, 0, 0.05);
+      --border-soft: rgba(0, 0, 0, 0.03);
 
-  --accent: #8c63ff;
-  --accent-pink: #ff6ac1;
-}
+      --purple: #8c63ff;
+      --purple-dark: #6137d7;
+      --pink: #ff6ac1;
+      --lavender: #ddd5ff;
+      --light-pink: #ffe0ef;
 
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, sans-serif;
-  background: linear-gradient(135deg, #fde1ef, #e0d9ff);
-  color: var(--text-primary);
-}
+      --surface-card: rgba(255, 255, 255, 0.94);
+      --surface-chrome: rgba(255, 255, 255, 0.90);
+      --surface-frosted: rgba(255, 255, 255, 0.78);
 
-.container {
-  max-width: 720px;
-  margin: 0 auto;
-  padding: 32px 20px 60px;
-}
+      --shadow-lg: 0 30px 80px rgba(93, 57, 201, 0.14);
+      --shadow-md: 0 16px 40px rgba(31, 31, 40, 0.08);
+      --shadow-sm: 0 8px 24px rgba(31, 31, 40, 0.05);
 
-.card {
-  background: var(--card);
-  border-radius: 20px;
-  padding: 28px;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.05);
-  border: 1px solid var(--border);
-}
+      --radius-xl: 32px;
+      --radius-lg: 26px;
+      --radius-md: 20px;
+      --radius-sm: 16px;
 
-h1 {
-  font-size: 28px;
-  margin-bottom: 8px;
-}
+      --container: 960px;
+    }
 
-h2 {
-  margin-top: 28px;
-  font-size: 18px;
-}
+    * {
+      box-sizing: border-box;
+    }
 
-p, li {
-  font-size: 15px;
-  line-height: 1.6;
-  color: var(--text-secondary);
-}
+    html {
+      scroll-behavior: smooth;
+    }
 
-ul {
-  padding-left: 18px;
-}
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", sans-serif;
+      color: var(--text-primary);
+      background:
+        radial-gradient(circle at top left, rgba(255, 106, 193, 0.20), transparent 34%),
+        radial-gradient(circle at top right, rgba(140, 99, 255, 0.16), transparent 28%),
+        linear-gradient(180deg, #fff9fc 0%, #fafaff 28%, #f8f7ff 100%);
+      overflow-x: hidden;
+    }
 
-a {
-  color: var(--accent);
-  text-decoration: none;
-}
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
 
-.header {
-  margin-bottom: 20px;
-}
+    .page-shell {
+      position: relative;
+      isolation: isolate;
+    }
 
-.back {
-  display: inline-block;
-  margin-bottom: 16px;
-  font-size: 14px;
-}
+    .page-shell::before,
+    .page-shell::after {
+      content: "";
+      position: fixed;
+      inset: auto;
+      pointer-events: none;
+      z-index: -1;
+      filter: blur(90px);
+      opacity: 0.7;
+    }
 
-.footer {
-  margin-top: 30px;
-  font-size: 13px;
-  color: var(--text-secondary);
-}
-</style>
+    .page-shell::before {
+      width: 340px;
+      height: 340px;
+      top: 90px;
+      left: -70px;
+      background: rgba(255, 106, 193, 0.24);
+      border-radius: 50%;
+    }
+
+    .page-shell::after {
+      width: 380px;
+      height: 380px;
+      top: 40px;
+      right: -90px;
+      background: rgba(140, 99, 255, 0.20);
+      border-radius: 50%;
+    }
+
+    .container {
+      width: min(var(--container), calc(100% - 32px));
+      margin: 0 auto;
+    }
+
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 30;
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      background: linear-gradient(
+        to bottom,
+        rgba(255, 255, 255, 0.92),
+        rgba(255, 255, 255, 0.74)
+      );
+      border-bottom: 1px solid rgba(0, 0, 0, 0.03);
+    }
+
+    .topbar-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      min-height: 72px;
+    }
+
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+    }
+
+    .brand-mark {
+      width: 38px;
+      height: 38px;
+      border-radius: 14px;
+      background:
+        linear-gradient(135deg, rgba(255,255,255,0.72), rgba(255,255,255,0.22)),
+        linear-gradient(135deg, var(--pink), var(--purple));
+      box-shadow:
+        inset 0 1px 0 rgba(255,255,255,0.6),
+        0 10px 22px rgba(118, 82, 241, 0.22);
+      position: relative;
+      flex: 0 0 auto;
+    }
+
+    .brand-mark::before,
+    .brand-mark::after {
+      content: "";
+      position: absolute;
+      background: rgba(255,255,255,0.95);
+      border-radius: 999px;
+    }
+
+    .brand-mark::before {
+      width: 16px;
+      height: 3px;
+      left: 11px;
+      top: 12px;
+    }
+
+    .brand-mark::after {
+      width: 10px;
+      height: 3px;
+      left: 11px;
+      top: 19px;
+      box-shadow: 0 7px 0 rgba(255,255,255,0.95);
+    }
+
+    .topbar-links {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .nav-link {
+      padding: 10px 14px;
+      border-radius: 999px;
+      color: var(--text-secondary);
+      font-size: 14px;
+      transition: background 0.2s ease, color 0.2s ease;
+    }
+
+    .nav-link:hover {
+      background: rgba(0, 0, 0, 0.04);
+      color: var(--text-primary);
+    }
+
+    .nav-cta {
+      padding: 12px 18px;
+      border-radius: 999px;
+      font-weight: 600;
+      color: white;
+      background: linear-gradient(90deg, var(--pink), var(--purple));
+      box-shadow: 0 10px 24px rgba(140, 99, 255, 0.22);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .nav-cta:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 14px 30px rgba(140, 99, 255, 0.26);
+    }
+
+    .hero {
+      padding: 44px 0 24px;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 16px;
+      padding: 10px 14px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.72);
+      border: 1px solid rgba(255, 255, 255, 0.8);
+      box-shadow: var(--shadow-sm);
+      color: var(--text-secondary);
+      font-size: 13px;
+      font-weight: 600;
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+    }
+
+    .eyebrow-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: linear-gradient(90deg, var(--pink), var(--purple));
+      box-shadow: 0 0 0 6px rgba(140, 99, 255, 0.08);
+    }
+
+    .hero-title {
+      margin: 0;
+      font-size: clamp(36px, 5vw, 58px);
+      line-height: 0.98;
+      letter-spacing: -0.045em;
+    }
+
+    .hero-gradient {
+      display: block;
+      background: linear-gradient(90deg, var(--pink), var(--purple-dark));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .hero-text {
+      margin: 20px 0 0;
+      max-width: 760px;
+      font-size: 17px;
+      line-height: 1.7;
+      color: var(--text-secondary);
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 14px;
+      flex-wrap: wrap;
+      margin-top: 28px;
+    }
+
+    .hero-cta-primary,
+    .hero-cta-secondary {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 52px;
+      padding: 0 22px;
+      border-radius: 999px;
+      font-weight: 600;
+      transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+    }
+
+    .hero-cta-primary {
+      color: white;
+      background: linear-gradient(90deg, var(--pink), var(--purple));
+      box-shadow: 0 12px 26px rgba(140, 99, 255, 0.22);
+    }
+
+    .hero-cta-primary:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 14px 30px rgba(140, 99, 255, 0.26);
+    }
+
+    .hero-cta-secondary {
+      background: rgba(255, 255, 255, 0.72);
+      border: 1px solid rgba(255, 255, 255, 0.82);
+      box-shadow: var(--shadow-sm);
+      color: var(--text-primary);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+    }
+
+    .hero-cta-secondary:hover {
+      background: rgba(255, 255, 255, 0.9);
+      transform: translateY(-1px);
+    }
+
+    .content-section {
+      padding: 20px 0 56px;
+    }
+
+    .policy-card {
+      position: relative;
+      overflow: hidden;
+      border-radius: var(--radius-xl);
+      background: linear-gradient(
+        180deg,
+        rgba(255,255,255,0.90),
+        rgba(255,255,255,0.82)
+      );
+      border: 1px solid rgba(255,255,255,0.84);
+      box-shadow: var(--shadow-lg);
+      backdrop-filter: blur(22px);
+      -webkit-backdrop-filter: blur(22px);
+      padding: 32px;
+    }
+
+    .policy-card::before {
+      content: "";
+      position: absolute;
+      inset: 0 0 auto 0;
+      height: 120px;
+      background: linear-gradient(
+        180deg,
+        rgba(255,255,255,0.38),
+        rgba(255,255,255,0)
+      );
+      pointer-events: none;
+    }
+
+    .policy-card > * {
+      position: relative;
+      z-index: 1;
+    }
+
+    .policy-meta {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 14px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.72);
+      border: 1px solid rgba(255,255,255,0.84);
+      box-shadow: var(--shadow-sm);
+      color: var(--text-secondary);
+      font-size: 13px;
+      font-weight: 600;
+      margin-bottom: 20px;
+    }
+
+    .policy-meta-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: linear-gradient(90deg, var(--pink), var(--purple));
+    }
+
+    .policy-intro {
+      margin: 0 0 28px;
+      font-size: 16px;
+      line-height: 1.75;
+      color: var(--text-secondary);
+      max-width: 760px;
+    }
+
+    .policy-grid {
+      display: grid;
+      gap: 18px;
+    }
+
+    .policy-section {
+      padding: 22px 22px 20px;
+      border-radius: var(--radius-lg);
+      background: rgba(255, 255, 255, 0.58);
+      border: 1px solid rgba(255,255,255,0.78);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .policy-section h2 {
+      margin: 0 0 12px;
+      font-size: 20px;
+      letter-spacing: -0.03em;
+    }
+
+    .policy-section p {
+      margin: 0;
+      font-size: 15px;
+      line-height: 1.72;
+      color: var(--text-secondary);
+    }
+
+    .policy-section p + p {
+      margin-top: 12px;
+    }
+
+    .policy-section ul {
+      margin: 14px 0 0;
+      padding-left: 18px;
+      color: var(--text-secondary);
+    }
+
+    .policy-section li {
+      margin: 10px 0;
+      line-height: 1.68;
+      font-size: 15px;
+    }
+
+    .policy-section strong {
+      color: var(--text-primary);
+    }
+
+    .contact-card {
+      margin-top: 18px;
+      padding: 22px;
+      border-radius: var(--radius-lg);
+      background:
+        linear-gradient(135deg, rgba(255,255,255,0.8), rgba(255,255,255,0.64)),
+        linear-gradient(135deg, rgba(255,106,193,0.14), rgba(140,99,255,0.14));
+      border: 1px solid rgba(255,255,255,0.84);
+      box-shadow: var(--shadow-md);
+    }
+
+    .contact-card h2 {
+      margin: 0 0 10px;
+      font-size: 20px;
+      letter-spacing: -0.03em;
+    }
+
+    .contact-card p {
+      margin: 0;
+      color: var(--text-secondary);
+      line-height: 1.7;
+      font-size: 15px;
+    }
+
+    .contact-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      margin-top: 14px;
+      padding: 12px 16px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.78);
+      border: 1px solid rgba(255,255,255,0.84);
+      box-shadow: var(--shadow-sm);
+      color: var(--text-primary);
+      font-weight: 600;
+    }
+
+    .contact-link:hover {
+      background: rgba(255,255,255,0.96);
+    }
+
+    .footer {
+      padding: 12px 0 54px;
+    }
+
+    .footer-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      padding: 20px 0 0;
+      border-top: 1px solid rgba(0, 0, 0, 0.05);
+      color: var(--text-secondary);
+      font-size: 14px;
+    }
+
+    .footer-links {
+      display: inline-flex;
+      align-items: center;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .footer-links a:hover {
+      color: var(--text-primary);
+    }
+
+    [data-reveal] {
+      opacity: 0;
+      transform: translateY(22px);
+      transition:
+        opacity 0.7s ease,
+        transform 0.7s ease;
+    }
+
+    [data-reveal].is-visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    @media (max-width: 860px) {
+      .topbar-inner {
+        min-height: 64px;
+      }
+
+      .topbar-links .nav-link {
+        display: none;
+      }
+
+      .policy-card {
+        padding: 22px;
+      }
+
+      .policy-section,
+      .contact-card {
+        padding: 18px;
+      }
+    }
+
+    @media (max-width: 560px) {
+      .container {
+        width: min(var(--container), calc(100% - 20px));
+      }
+
+      .nav-cta {
+        padding: 11px 16px;
+        font-size: 14px;
+      }
+
+      .hero-title {
+        font-size: 38px;
+      }
+
+      .hero-text,
+      .policy-intro,
+      .policy-section p,
+      .policy-section li,
+      .contact-card p {
+        font-size: 15px;
+      }
+
+      .footer-inner {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html {
+        scroll-behavior: auto;
+      }
+
+      [data-reveal] {
+        opacity: 1;
+        transform: none;
+        transition: none;
+      }
+
+      .nav-cta,
+      .hero-cta-primary,
+      .hero-cta-secondary {
+        transition: none;
+      }
+    }
+  </style>
 </head>
-
 <body>
+  <div class="page-shell">
+    <header class="topbar">
+      <div class="container topbar-inner">
+        <a class="brand" href="index.html" aria-label="Task Planner home">
+          <span class="brand-mark" aria-hidden="true"></span>
+          <span>Task Planner</span>
+        </a>
 
-<div class="container">
-  <a class="back" href="index.html">← Back to app</a>
+        <nav class="topbar-links" aria-label="Primary">
+          <a class="nav-link" href="index.html#features">Features</a>
+          <a class="nav-link" href="index.html#screens">Screens</a>
+          <a class="nav-link" href="privacy.html">Privacy</a>
+          <a class="nav-cta" href="index.html">Back to main site</a>
+        </nav>
+      </div>
+    </header>
 
-  <div class="card">
-    <div class="header">
-      <h1>Task Planner Privacy Policy</h1>
-      <p><strong>Last updated:</strong> April 13, 2026</p>
-    </div>
+    <main>
+      <section class="hero">
+        <div class="container" data-reveal>
+          <div class="eyebrow">
+            <span class="eyebrow-dot"></span>
+            Clear and simple information about your data
+          </div>
 
-    <h2>Overview</h2>
-    <p>
-      Task Planner is an iOS task management application designed to help you organize your tasks, schedule reminders, track progress, and view statistics.
-      The app does not require account creation or sign-in.
-    </p>
+          <h1 class="hero-title">
+            Privacy Policy
+            <span class="hero-gradient">for Task Planner</span>
+          </h1>
 
-    <h2>Data Storage</h2>
-    <p>All data is stored locally on your device. This may include:</p>
-    <ul>
-      <li>tasks, notes, dates, reminders, categories and settings</li>
-      <li>small photo thumbnails attached to tasks</li>
-      <li>app preferences and widget data</li>
-      <li>calendar identifiers for sync</li>
-    </ul>
-    <p>Task Planner does not upload your data to external servers.</p>
+          <p class="hero-text">
+            This page explains what Task Planner stores, what optional system features it uses,
+            and how your data is handled when you use the app.
+          </p>
 
-    <h2>Photos</h2>
-    <p>
-      Photos are optional. If you attach one, the app uses the iOS photo picker and only accesses the image you select.
-      Photos are stored locally and are not uploaded.
-    </p>
+          <div class="hero-actions">
+            <a class="hero-cta-primary" href="index.html">Back to Task Planner</a>
+            <a class="hero-cta-secondary" href="mailto:rus.melanin@outlook.com">Contact support</a>
+          </div>
+        </div>
+      </section>
 
-    <h2>Calendar</h2>
-    <p>
-      Calendar access is optional. If enabled, the app can create and sync tasks with Apple Calendar and display your events.
-    </p>
+      <section class="content-section">
+        <div class="container">
+          <div class="policy-card" data-reveal>
+            <div class="policy-meta">
+              <span class="policy-meta-dot"></span>
+              Last updated: April 13, 2026
+            </div>
 
-    <h2>Notifications</h2>
-    <p>
-      Task Planner uses local notifications to remind you about tasks. No remote push notification servers are used.
-    </p>
+            <p class="policy-intro">
+              Task Planner is an iOS task management application designed to help you organize your tasks,
+              schedule reminders, track progress, and view statistics. Task Planner does not require account
+              creation or sign-in to use its core features.
+            </p>
 
-    <h2>Third-Party Services</h2>
-    <p>
-      The app does not use analytics, ads, or tracking services.
-      It uses Apple frameworks such as StoreKit, EventKit, UserNotifications, and PhotosUI.
-    </p>
+            <div class="policy-grid">
+              <section class="policy-section" data-reveal>
+                <h2>Overview</h2>
+                <p>
+                  Task Planner is built to keep planning simple, fast, and private. The app is designed to work
+                  without requiring an account, and its core features can be used directly on your device.
+                </p>
+              </section>
 
-    <h2>Data Sharing</h2>
-    <p>
-      Your data stays on your device. Task Planner does not sell, share, or track your data.
-    </p>
+              <section class="policy-section" data-reveal>
+                <h2>Data Storage</h2>
+                <p>
+                  Task Planner stores your data locally on your device using Apple’s system storage technologies.
+                </p>
+                <p>Depending on how you use the app, this may include:</p>
+                <ul>
+                  <li>task titles, notes, dates, times, all-day settings, colors, categories, completion history, recurring task settings, and reminders;</li>
+                  <li>small photo thumbnails attached to tasks;</li>
+                  <li>app preferences such as theme, week start settings, notification preferences, and calendar integration settings;</li>
+                  <li>identifiers used for Apple Calendar synchronization;</li>
+                  <li>widget data shared between the app and its widget via Apple App Groups.</li>
+                </ul>
+                <p>
+                  Task Planner does not upload your task data to any developer-operated servers.
+                </p>
+              </section>
 
-    <h2>Data Retention</h2>
-    <p>
-      Your data remains on your device until you delete it or remove the app.
-    </p>
+              <section class="policy-section" data-reveal>
+                <h2>Photos</h2>
+                <p>
+                  Adding photos to tasks is optional.
+                </p>
+                <p>
+                  If you choose to attach a photo, the app uses the iOS system photo picker to let you select an image.
+                  Task Planner only accesses the image you choose and stores a small thumbnail on your device.
+                </p>
+                <p>
+                  The app does not access your full photo library and does not upload your photos to external servers.
+                </p>
+              </section>
 
-    <h2>Your Choices</h2>
-    <ul>
-      <li>You can disable photos, calendar, or notifications</li>
-      <li>You can edit or delete your data at any time</li>
-      <li>You can manage subscriptions via Apple</li>
-    </ul>
+              <section class="policy-section" data-reveal>
+                <h2>Calendar</h2>
+                <p>
+                  Calendar access is optional.
+                </p>
+                <p>If enabled, Task Planner may:</p>
+                <ul>
+                  <li>create or use a calendar named “Task Planner” in Apple Calendar;</li>
+                  <li>export your tasks to Apple Calendar;</li>
+                  <li>read your existing calendar events to display them within the app;</li>
+                  <li>remove exported events when synchronization is disabled or when you choose to delete them.</li>
+                </ul>
+                <p>
+                  Task Planner stores local identifiers to keep exported events in sync.
+                </p>
+                <p>
+                  If your device syncs calendar data with iCloud or another provider, those services may process your data under their own privacy policies.
+                </p>
+              </section>
 
-    <h2>Contact</h2>
-    <p>
-      Email: <a href="mailto:rus.melanin@outlook.com">rus.melanin@outlook.com</a>
-    </p>
+              <section class="policy-section" data-reveal>
+                <h2>Notifications</h2>
+                <p>
+                  Notifications are optional.
+                </p>
+                <p>
+                  Task Planner uses local notifications to remind you about tasks. These notifications are scheduled
+                  and delivered on your device using Apple’s system frameworks.
+                </p>
+                <p>
+                  Task Planner does not use remote push notification servers.
+                </p>
+              </section>
 
-    <div class="footer">
-      © 2026 Task Planner
-    </div>
+              <section class="policy-section" data-reveal>
+                <h2>Third-Party Services</h2>
+                <p>
+                  Task Planner does not use third-party analytics, advertising, or tracking services.
+                </p>
+                <p>The app uses Apple-provided frameworks where necessary:</p>
+                <ul>
+                  <li>StoreKit for subscriptions and purchases;</li>
+                  <li>EventKit for calendar integration;</li>
+                  <li>UserNotifications for reminders;</li>
+                  <li>PhotosUI for selecting images.</li>
+                </ul>
+                <p>
+                  If you make a purchase, Apple processes payment information according to its own privacy policies.
+                  Task Planner does not collect your payment details.
+                </p>
+              </section>
+
+              <section class="policy-section" data-reveal>
+                <h2>Data Sharing</h2>
+                <p>
+                  Task Planner is designed to keep your data on your device.
+                </p>
+                <p>The app does not:</p>
+                <ul>
+                  <li>sell your personal data;</li>
+                  <li>share your data with advertisers;</li>
+                  <li>track you across other apps or websites;</li>
+                  <li>upload your tasks or photos to external servers.</li>
+                </ul>
+                <p>
+                  Some data may be handled by Apple when you use system features such as subscriptions, calendar integration, notifications, or widgets.
+                </p>
+              </section>
+
+              <section class="policy-section" data-reveal>
+                <h2>Data Retention</h2>
+                <p>
+                  Your data remains on your device until you choose to delete it.
+                </p>
+                <ul>
+                  <li>Tasks, categories, preferences, and photos remain stored until removed by you or until the app is deleted.</li>
+                  <li>Widget data is updated automatically as the widget refreshes.</li>
+                  <li>Calendar events exported to Apple Calendar remain there until you remove them.</li>
+                  <li>Scheduled notifications remain active until delivered or canceled.</li>
+                </ul>
+                <p>
+                  If you delete the app, locally stored data is typically removed from your device. Data managed by Apple services may remain subject to Apple’s policies.
+                </p>
+              </section>
+
+              <section class="policy-section" data-reveal>
+                <h2>Your Choices</h2>
+                <p>
+                  You control how your data is used:
+                </p>
+                <ul>
+                  <li>You can choose whether to add photos to tasks.</li>
+                  <li>You can enable or disable calendar access at any time.</li>
+                  <li>You can allow or deny notifications.</li>
+                  <li>You can edit or delete your tasks and data.</li>
+                  <li>You can manage or cancel subscriptions through Apple.</li>
+                </ul>
+              </section>
+            </div>
+
+            <div class="contact-card" data-reveal>
+              <h2>Contact</h2>
+              <p>
+                If you have questions about this privacy policy, please contact:
+              </p>
+              <a class="contact-link" href="mailto:rus.melanin@outlook.com">
+                rus.melanin@outlook.com
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <div class="container footer-inner">
+        <div>© 2026 Task Planner</div>
+
+        <div class="footer-links">
+          <a href="index.html">Main site</a>
+          <a href="index.html#features">Features</a>
+          <a href="index.html#screens">Screens</a>
+          <a href="privacy.html">Privacy Policy</a>
+          <a href="mailto:rus.melanin@outlook.com">Contact</a>
+        </div>
+      </div>
+    </footer>
   </div>
-</div>
 
+  <script>
+    const revealItems = document.querySelectorAll("[data-reveal]");
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("is-visible");
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+      {
+        threshold: 0.12,
+        rootMargin: "0px 0px -40px 0px"
+      }
+    );
+
+    revealItems.forEach((item) => observer.observe(item));
+  </script>
 </body>
 </html>
