@@ -1,0 +1,588 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Task Planner – Support</title>
+  <meta
+    name="description"
+    content="Contact Task Planner support for help, feedback, and questions."
+  />
+
+  <style>
+    :root {
+      --text-primary: #1f1f28;
+      --text-secondary: #737380;
+      --purple: #8c63ff;
+      --purple-dark: #6137d7;
+      --pink: #ff6ac1;
+      --border: rgba(0, 0, 0, 0.05);
+      --shadow-lg: 0 30px 80px rgba(93, 57, 201, 0.14);
+      --shadow-md: 0 16px 40px rgba(31, 31, 40, 0.08);
+      --shadow-sm: 0 8px 24px rgba(31, 31, 40, 0.05);
+      --container: 920px;
+      --radius-xl: 32px;
+      --radius-lg: 26px;
+      --radius-md: 20px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", sans-serif;
+      color: var(--text-primary);
+      background:
+        radial-gradient(circle at top left, rgba(255, 106, 193, 0.20), transparent 34%),
+        radial-gradient(circle at top right, rgba(140, 99, 255, 0.16), transparent 28%),
+        linear-gradient(180deg, #fff9fc 0%, #fafaff 28%, #f8f7ff 100%);
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .page-shell {
+      position: relative;
+      isolation: isolate;
+    }
+
+    .page-shell::before,
+    .page-shell::after {
+      content: "";
+      position: fixed;
+      pointer-events: none;
+      z-index: -1;
+      filter: blur(90px);
+      opacity: 0.7;
+      border-radius: 50%;
+    }
+
+    .page-shell::before {
+      width: 340px;
+      height: 340px;
+      top: 90px;
+      left: -70px;
+      background: rgba(255, 106, 193, 0.24);
+    }
+
+    .page-shell::after {
+      width: 380px;
+      height: 380px;
+      top: 40px;
+      right: -90px;
+      background: rgba(140, 99, 255, 0.20);
+    }
+
+    .container {
+      width: min(var(--container), calc(100% - 32px));
+      margin: 0 auto;
+    }
+
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 30;
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      background: linear-gradient(
+        to bottom,
+        rgba(255, 255, 255, 0.92),
+        rgba(255, 255, 255, 0.74)
+      );
+      border-bottom: 1px solid rgba(0, 0, 0, 0.03);
+    }
+
+    .topbar-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      min-height: 72px;
+    }
+
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+    }
+
+    .brand-mark {
+      width: 38px;
+      height: 38px;
+      border-radius: 14px;
+      background:
+        linear-gradient(135deg, rgba(255,255,255,0.72), rgba(255,255,255,0.22)),
+        linear-gradient(135deg, var(--pink), var(--purple));
+      box-shadow:
+        inset 0 1px 0 rgba(255,255,255,0.6),
+        0 10px 22px rgba(118, 82, 241, 0.22);
+      position: relative;
+      flex: 0 0 auto;
+    }
+
+    .brand-mark::before,
+    .brand-mark::after {
+      content: "";
+      position: absolute;
+      background: rgba(255,255,255,0.95);
+      border-radius: 999px;
+    }
+
+    .brand-mark::before {
+      width: 16px;
+      height: 3px;
+      left: 11px;
+      top: 12px;
+    }
+
+    .brand-mark::after {
+      width: 10px;
+      height: 3px;
+      left: 11px;
+      top: 19px;
+      box-shadow: 0 7px 0 rgba(255,255,255,0.95);
+    }
+
+    .topbar-links {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .nav-link {
+      padding: 10px 14px;
+      border-radius: 999px;
+      color: var(--text-secondary);
+      font-size: 14px;
+      transition: background 0.2s ease, color 0.2s ease;
+    }
+
+    .nav-link:hover {
+      background: rgba(0, 0, 0, 0.04);
+      color: var(--text-primary);
+    }
+
+    .nav-cta,
+    .primary-button {
+      padding: 12px 18px;
+      border-radius: 999px;
+      font-weight: 600;
+      color: white;
+      background: linear-gradient(90deg, var(--pink), var(--purple));
+      box-shadow: 0 10px 24px rgba(140, 99, 255, 0.22);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .nav-cta:hover,
+    .primary-button:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 14px 30px rgba(140, 99, 255, 0.26);
+    }
+
+    .hero {
+      padding: 44px 0 24px;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 16px;
+      padding: 10px 14px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.72);
+      border: 1px solid rgba(255, 255, 255, 0.8);
+      box-shadow: var(--shadow-sm);
+      color: var(--text-secondary);
+      font-size: 13px;
+      font-weight: 600;
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+    }
+
+    .eyebrow-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: linear-gradient(90deg, var(--pink), var(--purple));
+      box-shadow: 0 0 0 6px rgba(140, 99, 255, 0.08);
+    }
+
+    .hero-title {
+      margin: 0;
+      font-size: clamp(36px, 5vw, 58px);
+      line-height: 0.98;
+      letter-spacing: -0.045em;
+    }
+
+    .hero-gradient {
+      display: block;
+      background: linear-gradient(90deg, var(--pink), var(--purple-dark));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .hero-text {
+      margin: 20px 0 0;
+      max-width: 760px;
+      font-size: 17px;
+      line-height: 1.7;
+      color: var(--text-secondary);
+    }
+
+    .content-section {
+      padding: 20px 0 56px;
+    }
+
+    .support-layout {
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 18px;
+      align-items: stretch;
+    }
+
+    .card {
+      border-radius: var(--radius-xl);
+      background: linear-gradient(
+        180deg,
+        rgba(255,255,255,0.90),
+        rgba(255,255,255,0.82)
+      );
+      border: 1px solid rgba(255,255,255,0.84);
+      box-shadow: var(--shadow-lg);
+      backdrop-filter: blur(22px);
+      -webkit-backdrop-filter: blur(22px);
+      padding: 28px;
+    }
+
+    .card h2 {
+      margin: 0 0 12px;
+      font-size: 26px;
+      letter-spacing: -0.035em;
+    }
+
+    .card p {
+      margin: 0;
+      color: var(--text-secondary);
+      line-height: 1.7;
+      font-size: 15px;
+    }
+
+    .card p + p {
+      margin-top: 12px;
+    }
+
+    .secondary-card {
+      border-radius: var(--radius-lg);
+      background: rgba(255, 255, 255, 0.62);
+      border: 1px solid rgba(255,255,255,0.82);
+      box-shadow: var(--shadow-sm);
+      padding: 20px;
+    }
+
+    .secondary-card + .secondary-card {
+      margin-top: 14px;
+    }
+
+    .secondary-card h3 {
+      margin: 0 0 10px;
+      font-size: 18px;
+      letter-spacing: -0.025em;
+    }
+
+    .secondary-card p,
+    .secondary-card li {
+      color: var(--text-secondary);
+      line-height: 1.65;
+      font-size: 15px;
+    }
+
+    .secondary-card ul {
+      margin: 10px 0 0;
+      padding-left: 18px;
+    }
+
+    .support-email {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      margin-top: 18px;
+      padding: 12px 16px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.82);
+      border: 1px solid rgba(255,255,255,0.84);
+      box-shadow: var(--shadow-sm);
+      font-weight: 600;
+    }
+
+    .support-actions {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-top: 20px;
+    }
+
+    .ghost-button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 48px;
+      padding: 0 18px;
+      border-radius: 999px;
+      font-weight: 600;
+      background: rgba(255, 255, 255, 0.72);
+      border: 1px solid rgba(255, 255, 255, 0.82);
+      box-shadow: var(--shadow-sm);
+      color: var(--text-primary);
+    }
+
+    .ghost-button:hover {
+      background: rgba(255,255,255,0.94);
+    }
+
+    .footer {
+      padding: 12px 0 54px;
+    }
+
+    .footer-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      padding: 20px 0 0;
+      border-top: 1px solid rgba(0, 0, 0, 0.05);
+      color: var(--text-secondary);
+      font-size: 14px;
+    }
+
+    .footer-links {
+      display: inline-flex;
+      align-items: center;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .footer-links a:hover {
+      color: var(--text-primary);
+    }
+
+    [data-reveal] {
+      opacity: 0;
+      transform: translateY(22px);
+      transition:
+        opacity 0.7s ease,
+        transform 0.7s ease;
+    }
+
+    [data-reveal].is-visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    @media (max-width: 860px) {
+      .topbar-inner {
+        min-height: 64px;
+      }
+
+      .topbar-links .nav-link {
+        display: none;
+      }
+
+      .support-layout {
+        grid-template-columns: 1fr;
+      }
+
+      .card {
+        padding: 22px;
+      }
+    }
+
+    @media (max-width: 560px) {
+      .container {
+        width: min(var(--container), calc(100% - 20px));
+      }
+
+      .nav-cta {
+        padding: 11px 16px;
+        font-size: 14px;
+      }
+
+      .hero-title {
+        font-size: 38px;
+      }
+
+      .hero-text {
+        font-size: 15px;
+      }
+
+      .footer-inner {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      [data-reveal] {
+        opacity: 1;
+        transform: none;
+        transition: none;
+      }
+
+      .nav-cta,
+      .primary-button {
+        transition: none;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="page-shell">
+    <header class="topbar">
+      <div class="container topbar-inner">
+        <a class="brand" href="index.html" aria-label="Task Planner home">
+          <span class="brand-mark" aria-hidden="true"></span>
+          <span>Task Planner</span>
+        </a>
+
+        <nav class="topbar-links" aria-label="Primary">
+          <a class="nav-link" href="index.html#features">Features</a>
+          <a class="nav-link" href="index.html#screens">Screens</a>
+          <a class="nav-link" href="privacy.html">Privacy</a>
+          <a class="nav-cta" href="#">Download on App Store</a>
+        </nav>
+      </div>
+    </header>
+
+    <main>
+      <section class="hero">
+        <div class="container" data-reveal>
+          <div class="eyebrow">
+            <span class="eyebrow-dot"></span>
+            Support for Task Planner
+          </div>
+
+          <h1 class="hero-title">
+            Get help
+            <span class="hero-gradient">or send feedback</span>
+          </h1>
+
+          <p class="hero-text">
+            If you have questions, found a bug, or want to suggest an improvement,
+            you can contact Task Planner support directly by email.
+          </p>
+        </div>
+      </section>
+
+      <section class="content-section">
+        <div class="container support-layout">
+          <section class="card" data-reveal>
+            <h2>Contact support</h2>
+            <p>
+              The fastest way to get help is to send an email with a short description of the issue.
+            </p>
+            <p>
+              If possible, include your device model, iOS version, and a few details about what happened.
+            </p>
+
+            <a
+              class="support-email"
+              href="mailto:taskplanner.app@hotmail.com?subject=Task%20Planner%20Support"
+            >
+              taskplanner.app@hotmail.com
+            </a>
+
+            <div class="support-actions">
+              <a
+                class="primary-button"
+                href="mailto:taskplanner.app@hotmail.com?subject=Task%20Planner%20Support"
+              >
+                Email support
+              </a>
+
+              <a class="ghost-button" href="privacy.html">
+                View Privacy Policy
+              </a>
+            </div>
+          </section>
+
+          <div data-reveal>
+            <section class="secondary-card">
+              <h3>What to include</h3>
+              <ul>
+                <li>What you were trying to do</li>
+                <li>What happened instead</li>
+                <li>Your iPhone model and iOS version</li>
+                <li>A screenshot, if it helps explain the issue</li>
+              </ul>
+            </section>
+
+            <section class="secondary-card">
+              <h3>Feedback</h3>
+              <p>
+                Suggestions for improving Task Planner are always welcome.
+                If there is a feature you would like to see, feel free to write about it.
+              </p>
+            </section>
+
+            <section class="secondary-card">
+              <h3>Useful links</h3>
+              <p>
+                You can also visit the main site or read the privacy policy for more information.
+              </p>
+              <div class="support-actions" style="margin-top: 14px;">
+                <a class="ghost-button" href="index.html">Main site</a>
+                <a class="ghost-button" href="privacy.html">Privacy Policy</a>
+              </div>
+            </section>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <div class="container footer-inner">
+        <div>© 2026 Task Planner</div>
+
+        <div class="footer-links">
+          <a href="index.html">Main site</a>
+          <a href="privacy.html">Privacy Policy</a>
+          <a href="support.html">Support</a>
+          <a href="mailto:taskplanner.app@hotmail.com">Contact</a>
+        </div>
+      </div>
+    </footer>
+  </div>
+
+  <script>
+    const revealItems = document.querySelectorAll("[data-reveal]");
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("is-visible");
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+      {
+        threshold: 0.12,
+        rootMargin: "0px 0px -40px 0px"
+      }
+    );
+
+    revealItems.forEach((item) => observer.observe(item));
+  </script>
+</body>
+</html>
